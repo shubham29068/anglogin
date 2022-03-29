@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -13,10 +13,10 @@ export class RegisterComponent implements OnInit {
   registerForm!: FormGroup
   constructor(private formBuilder: FormBuilder, private _http: HttpClient, private router: Router) {
     this.registerForm = this.formBuilder.group({
-      name: [''],
-      email: [''],
-      confirmEmail: [],
-      password: ['']
+      name: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      confirmEmail: new FormControl(null, [Validators.required]),
+      password: new FormControl(null, [Validators.required])
     })
   }
 
@@ -25,6 +25,9 @@ export class RegisterComponent implements OnInit {
   }
   // make method to create user
   register() {
+    console.log('this.registerForm.value', this.registerForm.value)
+    console.log('this.registerForm', this.registerForm)
+    if (!this.registerForm.valid) { alert("Invalid fields"); return }
     this._http.post<any>("http://localhost:3000/api/mobile/auth/signup", this.registerForm.value, {
       headers: new HttpHeaders()
         .set('Content-Type', 'application/json')
@@ -36,5 +39,14 @@ export class RegisterComponent implements OnInit {
       alert("Error 404")
     }
     )
+  }
+  form() {
+    this.registerForm = this.formBuilder.group({
+      name: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      confirmEmail: new FormControl(null, [Validators.required]),
+      password: new FormControl(null, [Validators.required])
+      // role: new FormControl('Admin')
+    })
   }
 }
