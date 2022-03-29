@@ -5,7 +5,7 @@
                 <div class="text-center">
                     <h1>login Here</h1><hr>
                 </div>
-                <form [formGroup]="loginForm" (ngSubmit)="loggedIn" >
+                <form [formGroup]="loginForm" (ngSubmit)="loggedIn()" >
                     <div class="mb-3">
                       <label for="exampleInputEmail1" class="form-label">Email address</label>
                       <input formControlName="email" type="email" placeholder="Enter Registered Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">

@@ -21,11 +21,12 @@ export class LoginComponent implements OnInit {
   }
   // login define
   loggedIn() {
-    this._http.post<any>("localhost:3000/api/mobile/auth/login", {}).subscribe(res => {
-      const user = res.find((a: any) => {
-        return a.email === this.loginForm.value.email && a.password === this.loginForm.value.password
-      })
-      if (user) {
+    this._http.post<any>("http://localhost:3000/api/mobile/auth/login", this.loginForm.value).subscribe(res => {
+      // const user = res.find((a: any) => {
+      //   return a.email === this.loginForm.value.email && a.password === this.loginForm.value.password
+      // })
+      console.log('res', res)
+      if (res) {
         alert("Login successfull")
         this.loginForm.reset()
         this.router.navigate(['/'])

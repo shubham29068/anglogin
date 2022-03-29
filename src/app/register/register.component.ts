@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,7 +25,10 @@ export class RegisterComponent implements OnInit {
   }
   // make method to create user
   register() {
-    this._http.post<any>("localhost:3000/api/mobile/auth/signup", this.registerForm.value).subscribe(res => {
+    this._http.post<any>("http://localhost:3000/api/mobile/auth/signup", this.registerForm.value, {
+      headers: new HttpHeaders()
+        .set('Content-Type', 'application/json')
+    }).subscribe(res => {
       alert("Registration successfull")
       this.registerForm.reset()
       this.router.navigate(['login'])
